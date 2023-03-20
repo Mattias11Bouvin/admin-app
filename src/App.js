@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from 'react';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import NavBar from "./Components/Navbar";
+import PieChart from "./Components/PieChart";
+import ScatterPlot from "./Components/ScatterCharts";
+import BarChart from "./Components/BarChart";
+import DataTablePageOne from "./Components/DataTable";
+import DataTablePageTwo from "./Components/DataTable2";
+import DataTablePageThree from "./Components/DataTable3";
+import LineChart from "./Components/LineChart";
+
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const handleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const theme = createTheme({
+    palette: {
+      type: darkMode ? 'dark' : 'light',
+    },
+  });
+
+  const styles = {
+    textColor: darkMode ? '#fff' : '#000',
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NavBar darkMode={darkMode} handleDarkMode={handleDarkMode} />
+      <DataTablePageOne textColor={styles.textColor} />
+      <DataTablePageTwo textColor={styles.textColor} />
+      <DataTablePageThree textColor={styles.textColor} />
+      <PieChart />
+      <ScatterPlot />
+      <BarChart />
+    </ThemeProvider>
   );
 }
 
