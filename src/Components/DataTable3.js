@@ -1,4 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid';
+import { Grid, Paper } from "@material-ui/core";
 
 // Define columns for the table
 const columns = [
@@ -21,6 +22,8 @@ const rows = [
 
 function DataTablePageThree() {
   return (
+    <Grid container direction="column" spacing={2}>
+      <Grid item xs={12}></Grid>
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
@@ -30,6 +33,8 @@ function DataTablePageThree() {
         pagination
       />
     </div>
+    </Grid>
+    
   );
 }
 

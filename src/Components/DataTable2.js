@@ -1,6 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { makeStyles } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { Grid, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,20 +50,21 @@ function DataTablePageTwo({ style, darkMode }) {
   const classes = useStyles();
 
   return (
-    <Paper
-      className={`${classes.root} ${darkMode ? classes.dark : ""}`}
-      style={style}
-    >
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={10}
-          rowsPerPageOptions={[10, 20, 50]}
-          className={`${classes.table} ${darkMode ? classes.dark : ""}`}
-          pagination
-        />
-      </div>
+    <Paper className={`${classes.root} ${darkMode ? classes.dark : ""}`} style={style}>
+    <Grid container direction="column" spacing={2}>
+      <Grid item xs={12}>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10, 20, 50]}
+            className={`${classes.table} ${darkMode ? classes.dark : ""}`}
+            pagination
+          />
+        </div>
+      </Grid>
+    </Grid>
     </Paper>
   );
 }

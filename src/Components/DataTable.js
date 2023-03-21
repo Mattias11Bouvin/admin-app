@@ -1,61 +1,94 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import React, { useState } from "react";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-  },
-  table: {
-    minWidth: 650,
-  },
-}));
+function DataTablePageOne() {
+  const [users, setUsers] = useState([
+    { id: 1, name: "John Doe", email: "johndoe@example.com" },
+    { id: 2, name: "Jane Doe", email: "janedoe@example.com" },
+  ]);
 
-const rows = [
-  { id: 1, name: 'John Doe', age: 25, email: 'johndoe@example.com' },
-  { id: 2, name: 'Jane Smith', age: 32, email: 'janesmith@example.com' },
-  { id: 3, name: 'Bob Johnson', age: 40, email: 'bobjohnson@example.com' },
-  { id: 4, name: 'Alice Williams', age: 28, email: 'alicewilliams@example.com' },
-  { id: 5, name: 'Tom Brown', age: 45, email: 'tombrown@example.com' },
-];
+  const [editing, setEditing] = useState(false);
+  const [currentUser, setCurrentUser] = useState({ id: null, name: "", email: "" });
 
-function DataTablePageOne({ style }) {
-  const classes = useStyles();
+  const addUser = (user) => {
+    user.id = users.length + 1;
+    setUsers([...users, user]);
+  };
+
+  const deleteUser = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
+  const editUser = (id, updatedUser) => {
+    setEditing(false);
+    setUsers(users.map((user) => (user.id === id ? updatedUser : user)));
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCurrentUser({ ...currentUser, [name]: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!currentUser.name || !currentUser.email) return;
+    if (editing) {
+      editUser(currentUser.id, currentUser);
+    } else {
+      addUser(currentUser);
+    }
+    setCurrentUser({ id: null, name: "", email: "" });
+  };
+
+  const startEditing = (user) => {
+    setEditing(true);
+    setCurrentUser({ id: user.id, name: user.name, email: user.email });
+  };
 
   return (
-    <Paper className={classes.root} style={style}>
-      <TableContainer>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Age</TableCell>
-              <TableCell>Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.age}</TableCell>
-                <TableCell>{row.email}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    <div className="container">
+      <h1>Add or Edit User</h1>
+      <form className="form" onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input className="input"
+          type="text"
+          name="name"
+          value={currentUser.name}
+          onChange={handleInputChange}
+        />
+        <label>Email</label>
+        <input className="input"
+          type="text"
+          name="email"
+          value={currentUser.email}
+          onChange={handleInputChange}
+        />
+        <button className="action1">{editing ? "Update" : "Add"}</button>
+      </form>
+      <h1>Users</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <button className="action1" onClick={() => startEditing(user)}>Edit</button>
+                <button className="action1" onClick={() => deleteUser(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

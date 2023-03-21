@@ -34,11 +34,8 @@ function App() {
       <CssBaseline />
       <NavBar darkMode={darkMode} handleDarkMode={handleDarkMode} />
       <DataTablePageOne textColor={styles.textColor} />
-      <DataTablePageTwo textColor={styles.textColor} />
-      <DataTablePageThree textColor={styles.textColor} />
-      <PieChart />
-      <ScatterPlot />
-      <BarChart />
+   
+      
     </ThemeProvider>
   );
 }
