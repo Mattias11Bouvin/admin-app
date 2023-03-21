@@ -97,8 +97,50 @@ table button.action1 {
   cursor: pointer;
   border-radius: 5px;
   margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 table button.action1:hover {
   background-color: #3e8e41;
+}
+
+ /* adjust layout for smaller screens */
+ @media (max-width: 600px) {
+  .form {
+    margin-bottom: 1rem;
+  }
+  table {
+    font-size: 0.8rem;
+  }
+}
+
+/* increase font size and line height */
+.container {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+/* make buttons and input fields touch-friendly */
+button {
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+/* use percentage widths */
+.form {
+  width: 100%;
+}
+
+table {
+  width: 100%;
 }
